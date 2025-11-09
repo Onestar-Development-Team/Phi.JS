@@ -34,7 +34,7 @@ export class PHI {
     }
 
     object(img, pos, size = null, vertex = null){
-        const obj = { img: null, x:0, y:0, width:0, height:0, vertex: null };
+        const obj = { img: null, x:0, y:0, width:0, height:0, vertex: null, angle:0};
         obj.img = img;
         obj.x = pos[0];
         obj.y = pos[1];
@@ -121,33 +121,36 @@ export class PHI {
         const sin = Math.sin(rad);
         const rotated = [];
 
-        for (let i = 0; i < obj.vertex.length; i += 2) {
-            if (mark == 'zero'){
+        
+        if (mark == 'zero'){
+            for (let i = 0; i < obj.vertex.length; i += 2) {
                 const x = obj.vertex[i];
                 const y = obj.vertex[i + 1];
                 const rx = x * cos - y * sin;
                 const ry = x * sin + y * cos;
                 rotated.push(rx, ry);
-            } else if (mark == 'center') {
+            }
+        } else if (mark == 'center') {
+            for (let i = 0; i < obj.vertex.length; i += 2) {
                 const x = obj.vertex[i] - (obj.x+obj.width/2);
                 const y = obj.vertex[i + 1] - (obj.y+obj.height/2);
                 const rx = x * cos - y * sin + (obj.x+obj.width/2);
                 const ry = x * sin + y * cos + (obj.y+obj.height/2);
                 rotated.push(rx, ry);
-            } else if (mark == 'custom') {
+            }
+        } else if (mark == 'custom') {
+            for (let i = 0; i < obj.vertex.length; i += 2) {
                 const x = obj.vertex[i] - pos[0];
                 const y = obj.vertex[i + 1] - pos[1];
                 const rx = x * cos - y * sin + pos[0];
                 const ry = x * sin + y * cos + pos[1];
                 rotated.push(rx, ry);
             }
-
-            
         }
-        
-        obj.vertex = rotated
-        return obj;
 
+        obj.vertex = rotated;
+        obj.angle += rad;
+        return obj;
     }
 
     reSize(obj,ratio,mark='center'){
@@ -181,16 +184,26 @@ export class PHI {
             return obj_
 
         }
-        
-        
-        
-
-
-
-
-
-
     }
+    
+
+    move(obj_,addX,addY){
+        const obj = {...obj_}
+        obj.x += addX
+        obj.y += addY
+
+        const dx = Math.cos(obj.angle) * addX;
+        const dy = Math.sin(obj.angle) * addY;
+    
+        for(let i = 0; i < obj.vertex.length; i+=2){
+            obj.vertex[ i ] += addX
+            obj.vertex[ i + 1 ] += addY
+        }
+        
+        return obj;
+    }
+
+    
 
 }
 
