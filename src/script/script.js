@@ -22,7 +22,7 @@ import { PHI } from "/src/script/PHI.js"
 
             obj_1__ = phi.rotate(obj_1__,1,'center')
             
-            obj_1__ = phi.move(obj_1__,2,0)
+            obj_1__.x += 1
 
             console.log(obj_1__.vertex)
 
@@ -36,4 +36,23 @@ import { PHI } from "/src/script/PHI.js"
         });
     
 })();    
+
+
+// import { PHI } from "/src/script/PHI.js"
+
+// (async () => {
+//     const phi = new PHI("canvas");
+//     phi.display([innerWidth, innerHeight]);
+
+//     const img = await phi.imgLoad("./src/img/c.png");
+//     const object = phi.object(img1,[200,300],null);
+
+//     phi.mainLoop(() => {
+//         phi.fill(0.1,0.1,0.1,1);
+//         phi.blit(obj_1__);
+        
+//     });
+
+// })();    
+
 
