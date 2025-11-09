@@ -6,18 +6,28 @@ import { PHI } from "/src/script/PHI.js"
         const phi = new PHI("canvas");
         phi.display([innerWidth, innerHeight]);
 
-        const img1 = await phi.imgLoad("./src/img/1.jpg");
-        const img2 = await phi.imgLoad("./src/img/2.jpg");
+        const img1 = await phi.imgLoad("./src/img/c.png");
+
+        const obj_1 = phi.object(img1,[200,300],null);
+
+  
         
-        const t1 = phi.object(img1,[0,0],[200,200]);
-        const t2 = phi.object(img2,[0,0],[400,200]);
-        t2.width = innerWidth
-        t2.height = innerHeight
-    
+        
+        
+        let obj_1__ = phi.object(img1,[300,300],null);
+        let size =1;
+        
+        
         phi.mainLoop(() => {
+            (size += 0.03);
+            console.log(size)
+
+            obj_1__ = phi.reSize(obj_1,size,'center')
+            
+
             phi.fill(0.1,0.1,0.1,1);
-            phi.blit(t1);
-            phi.blit(t2);
+            phi.blit(obj_1__);
+           
         });
     
 })();    

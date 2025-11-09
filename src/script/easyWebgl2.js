@@ -118,15 +118,21 @@ export class easyWebgl2 {
         const gl = this.gl;
 
         gl.bindBuffer(gl.ARRAY_BUFFER, this.positionBuffer);
-        const x1 = x;
-        const y1 = y;
-        const x2 = x + w;
-        const y2 = y + h;
-        const vertex=[x1, y1,x2, y1,x1, y2,x1, y2,x2, y1,x2, y2]
+
+        let vertex;
         
         if (vertex_ == null){
-            vertex_ = vertex
+            const x1 = x;
+            const y1 = y;
+            const x2 = x + w;
+            const y2 = y + h;
+            vertex = [x1, y1,x2, y1,x1, y2,x1, y2,x2, y1,x2, y2]
+            vertex_ = vertex    
+        } else {
+            vertex = vertex_
         }
+
+
         const positions = new Float32Array(vertex_)
       
 
@@ -153,7 +159,7 @@ export class easyWebgl2 {
         // 실제 렌더링
         gl.uniform2f(this.resolutionLocation, gl.canvas.width, gl.canvas.height);
         gl.bindTexture(gl.TEXTURE_2D, image.texture);
-        gl.drawArrays(gl.TRIANGLES, 0, 6);
+        gl.drawArrays(gl.TRIANGLES, 0, (vertex.length / 2));
     }
 
     clear(r = 0, g = 0, b = 0, a = 1) {
