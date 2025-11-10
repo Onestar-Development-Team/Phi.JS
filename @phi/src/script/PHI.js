@@ -16,11 +16,11 @@ export class PHI {
             img:null,
             x:0,
             y:0,
-            width:0,
             height:0,
             vertex:null,
         }
     }
+
 
     async imgLoad(src){
         const img_ = await this.app.loadImage(src);
@@ -116,6 +116,15 @@ export class PHI {
         return false;
     } 
 
+    isEncounterPos(obj,pos){ // 추후 가능하다면 정점이 전환된 이미지의 접촉여부도 감지할수 있게 만들기
+        if (((obj.x <= pos[0])  && (pos[0] <= obj.x + obj.width)) && ((obj.y <= pos[1]) && (pos[1] <= obj.y + obj.height))) {          
+            return true  
+        }
+        return false
+    }
+
+
+
     random(num1,num2){
         if (num1 > num2) {
             console.error('랜덤오류. 최솟값이 최댓값보다 클수 없습니다')
@@ -171,7 +180,7 @@ export class PHI {
         return obj;
     }
 
-    reSize(obj,ratio,mark='center'){
+    reSizeBy(obj,ratio,mark='center'){
         if (mark == 'center'){
             const obj_ = {...obj};
             obj_.width = obj_.width * ratio
@@ -220,8 +229,6 @@ export class PHI {
         
         return obj;
     }
-
-    
 
 }
 

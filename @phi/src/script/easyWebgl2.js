@@ -4,6 +4,10 @@ export class easyWebgl2 {
         if (!this.gl) throw new Error("WebGL2를 지원하지 않는 브라우저입니다.");
 
         const gl = this.gl;
+        gl.enable(gl.BLEND);
+
+        // 알파 블렌딩 방식을 설정 (일반적인 방식)
+        gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
 
         // WebGL은 화면에 뭘 그릴 때, "정점(Vertex)"과 "프래그먼트(Fragment)" 셰이더를 사용함.
         // 여기선 이미지를 그냥 2D로 그릴거니까, 아주 단순한 셰이더를 만든다.
