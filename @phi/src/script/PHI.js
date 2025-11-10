@@ -1,5 +1,5 @@
 
-import { easyWebgl2 } from "/src/script/easyWebgl2.js"
+import { easyWebgl2 } from "/@phi/src/script/easyWebgl2.js"
 
 export class PHI {
     constructor(id){
@@ -33,8 +33,8 @@ export class PHI {
         canvas.height = size[1]
     }
 
-    object(img, pos, size = null, vertex = null){
-        const obj = { img: null, x:0, y:0, width:0, height:0, vertex: null, angle:0};
+    object(img, pos, size = null, vertex = null,texcoord=null){
+        const obj = { img: null, x:0, y:0, width:0, height:0, vertex: null, angle:0, texcoord:null};
         obj.img = img;
         obj.x = pos[0];
         obj.y = pos[1];
@@ -53,13 +53,31 @@ export class PHI {
             const x2 = obj.x + obj.width;
             const y2 = obj.y + obj.height;
             obj.vertex = [x1, y1,x2, y1,x1, y2,x1, y2,x2, y1,x2, y2]
-            
-            
-            null;
         } else {
             obj.vertex = vertex;
         }
+        
 
+
+        if (texcoord == null){
+            const u1 = 0.0;       
+            const v1 = 0.0;       
+            const u2 = 1.0;       
+            const v2 = 1.0;       
+
+            texcoord = 
+            obj.texcoord = [
+                u1, v1,
+                u2, v1,
+                u1, v2,
+                u1, v2,
+                u2, v1,
+                u2, v2
+            ];
+
+        } else {
+            obj.texcoord = texcoord;
+        }
 
 
         return obj;
@@ -68,7 +86,7 @@ export class PHI {
     blit(obj_){
         const obj = obj_;
         if (!obj.img) return;
-        this.app.drawImage(obj.img,obj.x,obj.y,obj.width,obj.height,obj.vertex);
+        this.app.drawImage(obj.img,obj.x,obj.y,obj.width,obj.height,obj.vertex,obj.texcoord);
 
     }
 

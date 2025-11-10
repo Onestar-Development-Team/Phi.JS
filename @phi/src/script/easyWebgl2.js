@@ -114,43 +114,53 @@ export class easyWebgl2 {
 
 
 
-    drawImage(image, x, y, w, h,vertex_=null) {
+    drawImage(image, x, y, w, h,vertex_=null,texcoord_=null) {
         const gl = this.gl;
 
         gl.bindBuffer(gl.ARRAY_BUFFER, this.positionBuffer);
 
-        let vertex;
-        
+
         if (vertex_ == null){
             const x1 = x;
             const y1 = y;
             const x2 = x + w;
             const y2 = y + h;
-            vertex = [x1, y1,x2, y1,x1, y2,x1, y2,x2, y1,x2, y2]
-            vertex_ = vertex    
-        } else {
-            vertex = vertex_
+            vertex_ = [x1, y1,x2, y1,x1, y2,x1, y2,x2, y1,x2, y2]  
         }
-
 
         const positions = new Float32Array(vertex_)
       
 
-        gl.bufferData(gl.ARRAY_BUFFER, positions, gl.STATIC_DRAW);
+        gl.bufferData(gl.ARRAY_BUFFER, positions, gl.DYNAMIC_DRAW);
 
         gl.enableVertexAttribArray(this.positionLocation);
         gl.vertexAttribPointer(this.positionLocation, 2, gl.FLOAT, false, 0, 0);
 
         // 텍스처 좌표 (0~1)
         gl.bindBuffer(gl.ARRAY_BUFFER, this.texcoordBuffer);
-        const texcoords = new Float32Array([
-            0, 0,
-            1, 0,
-            0, 1,
-            0, 1,
-            1, 0,
-            1, 1
-        ]);
+
+
+        
+        if (texcoord_ == null){
+            const u1 = 0.0;       // 왼쪽
+            const v1 = 0.0;       // 위
+            const u2 = 1.0;       // 오른쪽
+            const v2 = 1.0;       // 아래
+
+            // 삼각형 두 개로 사각형 구성
+            texcoord_ = [
+                u1, v1,
+                u2, v1,
+                u1, v2,
+                u1, v2,
+                u2, v1,
+                u2, v2
+            ];
+        }
+
+
+        const texcoords = new Float32Array(texcoord_)
+
         gl.bufferData(gl.ARRAY_BUFFER, texcoords, gl.STATIC_DRAW);
 
         gl.enableVertexAttribArray(this.texcoordLocation);
@@ -159,7 +169,7 @@ export class easyWebgl2 {
         // 실제 렌더링
         gl.uniform2f(this.resolutionLocation, gl.canvas.width, gl.canvas.height);
         gl.bindTexture(gl.TEXTURE_2D, image.texture);
-        gl.drawArrays(gl.TRIANGLES, 0, (vertex.length / 2));
+        gl.drawArrays(gl.TRIANGLES, 0, (vertex_.length / 2));
     }
 
     clear(r = 0, g = 0, b = 0, a = 1) {
