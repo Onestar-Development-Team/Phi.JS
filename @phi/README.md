@@ -18,21 +18,20 @@ phi.js는 webgl2 기반 렌더링 엔진입니다.
 ---
 
 ```javascript
-import { PHI } from "/PHI.js"
+import { PHI } from "/@phi/src/script/PHI.js"
 
-  
 
 (async () => {
 
-    const phi = new PHI("canvas");
+    const phi = new PHI("html파일안의canvas태그아이디");
 
     phi.display([innerWidth, innerHeight]);
 
   
 
-    const img = await phi.imgLoad("./src/img/c.png");
+    const img = await phi.imgLoad("이미지경로");
 
-    const object = phi.object(img1,[200,300],null);
+    const obj = phi.object(img1,[200,300],null);
 
   
 
@@ -40,7 +39,7 @@ import { PHI } from "/PHI.js"
 
         phi.fill(0.1,0.1,0.1,1);
 
-        phi.blit(obj_1__);
+        phi.blit(obj);
 
     });
 
@@ -52,7 +51,7 @@ import { PHI } from "/PHI.js"
 ---
 
 ```javascript
-import { PHI } from "/src/script/PHI.js"
+import { PHI } from "/@phi/src/script/PHI.js"
 ```
 
 먼저 PHI가 있는 디렉토리에서 PHI.js를 불러옵니다.
@@ -60,7 +59,7 @@ import { PHI } from "/src/script/PHI.js"
 ---
 
 ```javascript
-    const phi = new PHI("canvas");
+    const phi = new PHI("html파일안의canvas태그아이디");
     phi.display([innerWidth, innerHeight]);
 ```
 
@@ -70,8 +69,8 @@ display함수를 사용합니다.
 ---
 
 ```javascript
-	const img = await phi.imgLoad("./src/img/c.png");
-    const object = phi.object(img1,[200,300],null);
+	const img = await phi.imgLoad("이미지경로");
+    const obj = phi.object(img1,[200,300],null);
 ```
 
 이루 이미지를 imgLoad를 사용해 로드합니다.
@@ -84,7 +83,7 @@ display함수를 사용합니다.
 	
 	phi.fill(0.1,0.1,0.1,1);
 	
-	phi.blit(obj_1__);
+	phi.blit(obj);
 
 ```
 
@@ -119,5 +118,7 @@ display함수를 사용합니다.
 - `rotate( 오브젝트, 각고, 기준점(선택) )`
 - `reSize( 오브젝트, 비율, 기준(선택) )`
 - `move( 오브젝트, x증가량, y증가량)`
+
+#### 추후 업데이트로 더 많은 기능이 추가될 예정입니다.
 
 
