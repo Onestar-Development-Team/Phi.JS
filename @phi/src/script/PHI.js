@@ -214,14 +214,10 @@ export class PHI {
     }
     
 
-    move(obj_,addX,addY){
-        const obj = {...obj_}
+    move(obj,addX,addY){
         obj.x += addX
         obj.y += addY
 
-        const dx = Math.cos(obj.angle) * addX;
-        const dy = Math.sin(obj.angle) * addY;
-    
         for(let i = 0; i < obj.vertex.length; i+=2){
             obj.vertex[ i ] += addX
             obj.vertex[ i + 1 ] += addY
@@ -229,6 +225,40 @@ export class PHI {
         
         return obj;
     }
+
+    moveX(obj,addX){
+        obj.x += addX
+        for(let i = 0; i < obj.vertex.length; i+=2){
+            obj.vertex[ i ] += addX
+            obj.vertex[ i + 1 ] += addY
+        }
+        return obj;
+    }
+
+    moveY(obj,addY){
+        obj.y += addY
+        for(let i = 0; i < obj.vertex.length; i+=2){
+            obj.vertex[ i + 1 ] += addY
+        }
+        return obj;
+    }
+
+    Goto(obj,pos=Array,mark='zero'){
+        const addX = pos[0] - obj.x
+        const addY = pos[1] - obj.y 
+        obj.x +=  pos[0] - obj.x
+        obj.y += pos[1] - obj.y  
+        console.log(addX,addY)
+
+        for(let i = 0; i < obj.vertex.length; i+=2){
+            obj.vertex[ i ] += addX
+            obj.vertex[ i + 1 ] += addY
+        }
+        return obj;
+    }
+
+
+
 
 }
 
