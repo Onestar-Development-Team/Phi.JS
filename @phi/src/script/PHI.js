@@ -34,10 +34,28 @@ export class PHI {
     }
 
     object(img, pos, size = null, vertex = null,texcoord=null){
-        const obj = { img: null, x:0, y:0, width:0, height:0, vertex: null, angle:0, texcoord:null};
+        const obj = { 
+            img: null, 
+            x:0, 
+            y:0, 
+            width:0,
+            height:0,
+            vertex: null, 
+            angle:0, 
+            texcoord:null, 
+            startX : 0, 
+            startY : 0,
+            startWidth : 0,
+            startHeight : 0, 
+        };
+
+        
         obj.img = img;
         obj.x = pos[0];
         obj.y = pos[1];
+        obj.startX = obj.x
+        obj.startY = obj.y
+
 
         if (size === null){
             obj.width = img.width;
@@ -46,6 +64,8 @@ export class PHI {
             obj.width = size[0];
             obj.height = size[1];
         }
+        obj.startWidth = obj.width
+        obj.startHeight = obj.height
 
         if (vertex == null){
             const x1 = obj.x;
@@ -83,10 +103,17 @@ export class PHI {
         return obj;
     }
 
-    blit(obj_){
+    blit(obj_,mark='center'){
         const obj = obj_;
         if (!obj.img) return;
-        this.app.drawImage(obj.img,obj.x,obj.y,obj.width,obj.height,obj.vertex,obj.texcoord);
+
+        if (mark=='center'){
+            this.app.drawImage(obj.img,obj.x-(obj.width/2),obj.y-(obj.height/2),obj.width,obj.height,obj.vertex,obj.texcoord);
+
+        } else {
+            this.app.drawImage(obj.img,obj.x,obj.y,obj.width,obj.height,obj.vertex,obj.texcoord);
+            
+        }
 
     }
 
@@ -244,11 +271,18 @@ export class PHI {
     }
 
     Goto(obj,pos=Array,mark='zero'){
-        const addX = pos[0] - obj.x
-        const addY = pos[1] - obj.y 
+        let addX = pos[0] - obj.x
+        let addY = pos[1] - obj.y 
+        
+        
+        if (mark == 'center'){
+            addX -= obj.width/2 
+            addY -= obj.height/2
+        }
+
+
         obj.x +=  pos[0] - obj.x
-        obj.y += pos[1] - obj.y  
-        console.log(addX,addY)
+        obj.y += pos[1] - obj.y 
 
         for(let i = 0; i < obj.vertex.length; i+=2){
             obj.vertex[ i ] += addX
