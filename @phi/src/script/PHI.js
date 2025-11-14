@@ -64,8 +64,6 @@ export class PHI {
             obj.width = size[0];
             obj.height = size[1];
         }
-        obj.startWidth = obj.width
-        obj.startHeight = obj.height
 
         if (vertex == null){
             const x1 = obj.x;
@@ -103,18 +101,23 @@ export class PHI {
         return obj;
     }
 
-    blit(obj_,mark='center'){
-        const obj = obj_;
+    blit(obj_,mark='null'){
+        const obj = {...obj_}
+
         if (!obj.img) return;
 
-        if (mark=='center'){
-            this.app.drawImage(obj.img,obj.x-(obj.width/2),obj.y-(obj.height/2),obj.width,obj.height,obj.vertex,obj.texcoord);
+        if ( mark == 'center' ){
+            this.move(obj,-(obj.width/2),-(obj.height/2))
+            this.app.drawImage(obj.img,obj.x,obj.y,obj.width,obj.height,obj.vertex,obj.texcoord);
+            this.move(obj,+(obj.width/2),+(obj.height/2))
+
 
         } else {
             this.app.drawImage(obj.img,obj.x,obj.y,obj.width,obj.height,obj.vertex,obj.texcoord);
             
         }
 
+        return true;
     }
 
     mainLoop(func){
@@ -209,7 +212,10 @@ export class PHI {
 
     reSizeBy(obj,ratio,mark='center'){
         if (mark == 'center'){
-            const obj_ = {...obj};
+            const obj = {
+                ...obj_,
+                vertex: [...obj_.vertex]
+            };
             obj_.width = obj_.width * ratio
             obj_.height = obj_.height * ratio
             obj_.x -= obj_.width/2
@@ -227,7 +233,10 @@ export class PHI {
             return obj_
 
         } else {
-            const obj_ = {...obj};
+            const obj = {
+                ...obj_,
+                vertex: [...obj_.vertex]
+            };
             obj_.width = obj_.width * ratio;
             obj_.height = obj_.height * ratio;
             const x1 = obj_.x;
@@ -257,7 +266,6 @@ export class PHI {
         obj.x += addX
         for(let i = 0; i < obj.vertex.length; i+=2){
             obj.vertex[ i ] += addX
-            obj.vertex[ i + 1 ] += addY
         }
         return obj;
     }
