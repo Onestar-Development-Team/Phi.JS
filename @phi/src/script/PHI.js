@@ -210,7 +210,9 @@ export class PHI {
         return obj;
     }
 
-    reSizeBy(obj,ratio,mark='center'){
+    reSizeBy(obj_,ratio,mark='center'){
+
+        const vertex = [];
         if (mark == 'center'){
             const obj = {
                 ...obj_,
@@ -229,8 +231,7 @@ export class PHI {
             const y1 = obj_.y;
             const x2 = obj_.x + obj_.width;
             const y2 = obj_.y + obj_.height;
-            obj_.vertex = [x1, y1,x2, y1,x1, y2,x1, y2,x2, y1,x2, y2]
-            return obj_
+            vertex = [x1, y1,x2, y1,x1, y2,x1, y2,x2, y1,x2, y2]
 
         } else {
             const obj = {
@@ -243,10 +244,13 @@ export class PHI {
             const y1 = obj_.y;
             const x2 = obj_.x + obj_.width;
             const y2 = obj_.y + obj_.height;
-            obj_.vertex = [x1, y1,x2, y1,x1, y2,x1, y2,x2, y1,x2, y2]
-            return obj_
-
+            vertex = [x1, y1,x2, y1,x1, y2,x1, y2,x2, y1,x2, y2]
+            
         }
+
+
+        obj_.vertex = vertex
+        return obj_
     }
     
 
@@ -266,6 +270,7 @@ export class PHI {
         obj.x += addX
         for(let i = 0; i < obj.vertex.length; i+=2){
             obj.vertex[ i ] += addX
+            // obj.vertex[ i + 1 ] += addX
         }
         return obj;
     }

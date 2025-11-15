@@ -34,6 +34,7 @@ export class easyWebgl2 {
             varying vec2 v_texcoord;
             uniform sampler2D u_texture;
             void main() {
+                vec2 coord = clamp(v_texcoord, 0.0, 1.0);
                 gl_FragColor = texture2D(u_texture, v_texcoord);
             }
         `;
@@ -92,6 +93,8 @@ export class easyWebgl2 {
 
                     const texture = this.gl.createTexture();
                     const gl = this.gl;
+                    
+                    gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL, true);
 
                     gl.bindTexture(gl.TEXTURE_2D, texture);
                     gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, img);
@@ -99,7 +102,6 @@ export class easyWebgl2 {
                     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
                     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
                     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
-                    gl.generateMipmap(gl.TEXTURE_2D);
 
                     // 이미지 객체 생성 후 저장
                     const imageObj = { texture, width: img.width, height: img.height };
