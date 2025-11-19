@@ -137,14 +137,14 @@ export class PHI {
         }
     }
 
-    isEncounterObj(obj1,obj2){ // 추후 가능하다면 정점이 전환된 이미지의 접촉여부도 감지할수 있게 만들기
-        if (((obj1.x <= obj2.x)  && (obj2.x <= obj1.x + obj1.width)) || ((obj1.x <= obj2.x + obj2.width) && (obj2.x +obj2.width <= obj1.x + obj1.width))) {            
-            if (((obj1.y <= obj2.y)  && (obj2.y <= obj1.y + obj1.height)) || ((obj1.y <= obj2.y + obj2.height) && (obj2.y +obj2.height <= obj1.y + obj1.height))) {            
-                return true;
-            }
-        }
-        return false;
-    } 
+    isEncounterObj(obj1, obj2) {
+        return (
+            obj1.x < obj2.x + obj2.width &&
+            obj1.x + obj1.width > obj2.x &&
+            obj1.y < obj2.y + obj2.height &&
+            obj1.y + obj1.height > obj2.y
+        );
+    }
 
     isEncounterPos(obj,pos){ // 추후 가능하다면 정점이 전환된 이미지의 접촉여부도 감지할수 있게 만들기
         if (((obj.x <= pos[0])  && (pos[0] <= obj.x + obj.width)) && ((obj.y <= pos[1]) && (pos[1] <= obj.y + obj.height))) {          
@@ -251,7 +251,9 @@ export class PHI {
     }
     
 
-    move(obj,addX,addY){
+    move(obj,pos=Array){
+        const addX = pos[0]
+        const addY = pos[1]
         obj.x += addX
         obj.y += addY
 
@@ -301,6 +303,19 @@ export class PHI {
         return obj;
     }
 
+    
+    flip(obj,what='hor'){
+
+        if (what == 'hor'){
+            for(let i=0; i<obj.texcoord.length; i+=2){
+                obj.texcoord[i] = 1 - obj.texcoord[i]
+            }
+        } else if (what == 'ver'){
+            for(let i=0; i<obj.texcoord.length; i+=2){
+                obj.texcoord[i+1] = 1 - obj.texcoord[i+1]
+            }
+        }
+    }
 
 
 
