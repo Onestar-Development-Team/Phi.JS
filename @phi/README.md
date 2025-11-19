@@ -18,20 +18,21 @@ phi.js는 webgl2 기반 렌더링 엔진입니다.
 ---
 
 ```javascript
-import { PHI } from "/@phi/src/script/PHI.js"
+import { PHI } from "/PHI.js"
 
+  
 
 (async () => {
 
-    const phi = new PHI("html파일안의canvas태그아이디");
+    const phi = new PHI("canvas");
 
     phi.display([innerWidth, innerHeight]);
 
   
 
-    const img = await phi.imgLoad("이미지경로");
+    const img = await phi.imgLoad("./src/img/c.png");
 
-    const obj = phi.object(img1,[200,300],null);
+    const object = phi.object(img1,[200,300],null);
 
   
 
@@ -39,7 +40,7 @@ import { PHI } from "/@phi/src/script/PHI.js"
 
         phi.fill(0.1,0.1,0.1,1);
 
-        phi.blit(obj);
+        phi.blit(obj_1__);
 
     });
 
@@ -51,7 +52,7 @@ import { PHI } from "/@phi/src/script/PHI.js"
 ---
 
 ```javascript
-import { PHI } from "/@phi/src/script/PHI.js"
+import { PHI } from "/src/script/PHI.js"
 ```
 
 먼저 PHI가 있는 디렉토리에서 PHI.js를 불러옵니다.
@@ -59,7 +60,7 @@ import { PHI } from "/@phi/src/script/PHI.js"
 ---
 
 ```javascript
-    const phi = new PHI("html파일안의canvas태그아이디");
+    const phi = new PHI("canvas");
     phi.display([innerWidth, innerHeight]);
 ```
 
@@ -69,15 +70,12 @@ display함수를 사용합니다.
 ---
 
 ```javascript
-	const img = await phi.imgLoad("이미지경로");
-    const obj = phi.object(img1,[200,300],null);
+	const img = await phi.imgLoad("./src/img/c.png");
+    const object = phi.object(img1,[200,300],null);
 ```
 
 이루 이미지를 imgLoad를 사용해 로드합니다.
-
 그후 PHI.js 고유의 시스템 **오브젝트** 를 선언합니다.
-
-오브젝트 객체 안에는 위치,사이즈,텍스쳐 등 오브젝트에 관한 모든요소가 저장됩니다.
 
 ---
 
@@ -86,7 +84,7 @@ display함수를 사용합니다.
 	
 	phi.fill(0.1,0.1,0.1,1);
 	
-	phi.blit(obj);
+	phi.blit(obj_1__);
 
 ```
 
@@ -105,24 +103,47 @@ display함수를 사용합니다.
 	동기화 되지 않아 올바르게 코드가 동작하지 않을수도 있습니다.
 
 
-# 함수 파라미터
+# 함수
 
-내장함수의 입력값을 설명합니다.
-- `imgLoad( 이미지경로 )
-- `display( 크기=[가로,세로] )`
+##### 내장함수의 입력값을 설명합니다.
+
+- `imgLoad( 이미지 경로 )`
+- `display( 크기=[가로,세로] )` 
 - `object( 이미지객체, 좌표, 크기(선택), 버텍스정점(선택) )`
 - `blit( 오브젝트 객체)`
 - `mainLoop( 함수 )`
 - `fill( RGBA )`
 - `distanceGetObj( 오브젝트1, 오브젝트2, 기준(선택) )`
 - `isEncounterObj( 오브젝트1, 오브젝트2 )`
-- `isEncounterPos( 오브젝트,좌표(배열) )`
 - `random( 최소값, 최대값 )`
 - `randomFloat( 최소값, 최대값 )`
 - `rotate( 오브젝트, 각고, 기준점(선택) )`
-- `reSizeBy( 오브젝트, 비율, 기준(선택) )`
+- `reSize( 오브젝트, 비율, 기준(선택) )`
 - `move( 오브젝트, x증가량, y증가량)`
++ ` moveX( 오브젝트, x증가량 )`
+- `moveY( 오브젝트, y증가량 )`
+- `Goto( 오브젝트, 좌표(배열) )
+- `flip( 오브젝트, 어떻게반전할지("hor","ver") )`
 
-#### 추후 업데이트로 더 많은 기능이 추가될 예정입니다.
+---
 
+##### 내장함수의 사용법을 설명합니다.
+
+- `imgLoad` 이미지를 로드합니다.
+- `display` 화면의 사이즈를 정합니다.
+- `object` 오브젝트를 생성합니다.
+- `blit` 오브젝트를 그립니다.
+- `mainLoop` 계속해서 실행되는 반복문을 정의합니다.
+- `fill` 화면은 단일 색상으로 채웁니다.
+- `distanceGetObj` 두 오브젝트사이의 거리를 구합니다.
+- `isEncounterObj` 오브젝트와 한좌표 사이의 거리를 구합니다.
+- `random` 범위내에서 무작위 숫자를 생섭합니다.(정수) 
+- `randomFloat` 범위내에서 무작위 숫자를 생섭합니다.(실수)
+- `rotate` 오브젝트를 회전시킵니다.
+- `reSize` 오브젝트의 크기를 변화합니다.
+- `move` 오브젝트를 이동시킵니다.
++ `moveX` 오브젝트의 x좌표를 변화시킵니다.
+- `moveY` 오브젝트의 y좌표를 변화시킵니다.
+- `Goto` 오브젝트의를 특정 위치로 이동시킵니다.(순간이동) 
+- `flip` 오브젝트의 좌우,상하를 반전시킵니다.
 
