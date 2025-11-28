@@ -206,7 +206,7 @@ export class PHI {
         }
 
         obj.vertex = rotated;
-        obj.angle += rad;
+        obj.angle += deg;
         return obj;
     }
 
